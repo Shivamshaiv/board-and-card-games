@@ -299,6 +299,28 @@ def handle_get_hint(data):
     except Exception as e:
         emit('error', {'message': f'Error getting hint: {str(e)}'})
 
+@socketio.on('get_game_logs')
+def handle_get_game_logs(data):
+    """Get game logs"""
+    try:
+        game_id = data.get('game_id')
+        round_num = data.get('round_num')  # Optional filter by round
+        
+        if game_id not in games:
+            emit('error', {'message': 'Game not found'})
+            return
+        
+        game = games[game_id]
+        logs = game.get_game_logs(round_num)
+        
+        emit('game_logs_received', {
+            'logs': logs,
+            'current_round': game.current_round
+        })
+        
+    except Exception as e:
+        emit('error', {'message': f'Error getting logs: {str(e)}'})
+
 @socketio.on('disconnect')
 def handle_disconnect():
     """Handle client disconnect"""

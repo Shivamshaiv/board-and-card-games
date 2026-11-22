@@ -7,9 +7,11 @@ class KachuGameUI {
         this.humanPlayerIndex = 0;
         this.aiIntelligence = 5;
         this.currentHint = null;
+        this.gameLogs = [];
         this.setupSocketListeners();
         this.setupEventListeners();
         this.setupAIControls();
+        this.setupLogControls();
         this.joinGame();
     }
 
@@ -129,6 +131,13 @@ class KachuGameUI {
             this.displayHint(data.hint, data.hint_type);
         });
 
+        this.socket.on('game_logs_received', (data) => {
+            console.log('Game logs received:', data);
+            this.gameLogs = data.logs;
+            this.displayGameLogs(data.logs, data.current_round);
+            this.updateRoundFilter(data.current_round);
+        });
+
         this.socket.on('connect', () => {
             console.log('Connected to server');
         });
@@ -195,6 +204,48 @@ class KachuGameUI {
         if (hintBtn) {
             hintBtn.addEventListener('click', () => {
                 this.requestHint();
+            });
+        }
+    }
+
+    setupLogControls() {
+        const logBtn = document.getElementById('logBtn');
+        const logModal = document.getElementById('gameLogModal');
+        const closeLogBtn = document.getElementById('closeLogBtn');
+        const refreshLogBtn = document.getElementById('refreshLogBtn');
+        const logRoundFilter = document.getElementById('logRoundFilter');
+
+        if (logBtn) {
+            logBtn.addEventListener('click', () => {
+                this.toggleGameLog();
+            });
+        }
+
+        if (closeLogBtn) {
+            closeLogBtn.addEventListener('click', () => {
+                this.hideGameLog();
+            });
+        }
+
+        if (refreshLogBtn) {
+            refreshLogBtn.addEventListener('click', () => {
+                this.refreshGameLogs();
+            });
+        }
+
+        if (logRoundFilter) {
+            logRoundFilter.addEventListener('change', () => {
+                const selectedRound = logRoundFilter.value;
+                this.filterLogsByRound(selectedRound);
+            });
+        }
+
+        // Close modal when clicking outside
+        if (logModal) {
+            logModal.addEventListener('click', (e) => {
+                if (e.target === logModal) {
+                    this.hideGameLog();
+                }
             });
         }
         
@@ -753,6 +804,172 @@ class KachuGameUI {
         } else {
             hintDetails.innerHTML = '<div class="hint-error">No card suggestion available.</div>';
         }
+    }
+
+    // Game Log Methods
+    toggleGameLog() {
+        const logModal = document.getElementById('gameLogModal');
+        if (logModal) {
+            if (logModal.style.display === 'none' || !logModal.style.display) {
+                this.showGameLog();
+            } else {
+                this.hideGameLog();
+            }
+        }
+    }
+
+    showGameLog() {
+        const logModal = document.getElementById('gameLogModal');
+        if (logModal) {
+            logModal.style.display = 'flex';
+            this.refreshGameLogs();
+        }
+    }
+
+    hideGameLog() {
+        const logModal = document.getElementById('gameLogModal');
+        if (logModal) {
+            logModal.style.display = 'none';
+        }
+    }
+
+    refreshGameLogs() {
+        this.socket.emit('get_game_logs', {
+            game_id: this.gameId
+        });
+    }
+
+    filterLogsByRound(roundNum) {
+        const selectedRound = roundNum ? parseInt(roundNum) : null;
+        this.socket.emit('get_game_logs', {
+            game_id: this.gameId,
+            round_num: selectedRound
+        });
+    }
+
+    updateRoundFilter(currentRound) {
+        const logRoundFilter = document.getElementById('logRoundFilter');
+        if (logRoundFilter) {
+            // Clear existing options except "All Rounds"
+            logRoundFilter.innerHTML = '<option value="">All Rounds</option>';
+            
+            // Add options for each round
+            for (let i = 1; i <= currentRound; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Round ${i}`;
+                logRoundFilter.appendChild(option);
+            }
+        }
+    }
+
+    displayGameLogs(logs, currentRound) {
+        const logContent = document.getElementById('gameLogContent');
+        if (!logContent) return;
+
+        if (logs.length === 0) {
+            logContent.innerHTML = '<div class="log-entry"><div class="log-entry-details">No game actions yet.</div></div>';
+            return;
+        }
+
+        // Group logs by round and trick for better organization
+        const groupedLogs = {};
+        logs.forEach(log => {
+            const key = `R${log.round}-T${log.trick}`;
+            if (!groupedLogs[key]) {
+                groupedLogs[key] = [];
+            }
+            groupedLogs[key].push(log);
+        });
+
+        let html = '';
+        Object.keys(groupedLogs).sort().forEach(key => {
+            const roundTrickLogs = groupedLogs[key];
+            
+            roundTrickLogs.forEach(log => {
+                const entryClass = log.type.replace('_', '-');
+                const formattedDetails = this.formatLogDetails(log);
+                const playerBadge = this.formatPlayerName(log.player, log.type);
+                
+                html += `
+                    <div class="log-entry ${entryClass}">
+                        <div class="log-entry-header">
+                            <span class="log-entry-time">${log.timestamp}</span>
+                            <span class="log-entry-round">R${log.round}${log.trick > 0 ? ` T${log.trick}` : ''}</span>
+                        </div>
+                        <div class="log-entry-content">
+                            ${playerBadge}
+                            <div class="log-entry-details">${formattedDetails}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+        logContent.innerHTML = html;
+        
+        // Scroll to bottom to show latest logs
+        logContent.scrollTop = logContent.scrollHeight;
+    }
+
+    formatLogDetails(log) {
+        let details = log.details;
+        
+        if (log.type === 'card_played') {
+            // Format "played AH" -> "played [A♥]"
+            details = details.replace(/played (\w+)/g, (match, card) => {
+                return `played ${this.formatCard(card)}`;
+            });
+        } else if (log.type === 'trick_won') {
+            // Format trick details with better card representation
+            details = details.replace(/won trick with \[(.*?)\]/g, (match, cardsList) => {
+                const formattedCards = cardsList.split(', ').map(playerCard => {
+                    const [player, card] = playerCard.split(': ');
+                    return `<div class="log-trick-cards">${player}: ${this.formatCard(card)}</div>`;
+                }).join('');
+                return `won trick with:<br/>${formattedCards}`;
+            });
+        } else if (log.type === 'prediction') {
+            // Format predictions with better styling
+            details = details.replace(/predicted (\d+) tricks?/g, (match, count) => {
+                const tricksText = count === '1' ? 'trick' : 'tricks';
+                return `predicted <strong style="color: #059669; background: #ecfdf5; padding: 2px 6px; border-radius: 3px; border: 1px solid #86efac;">${count}</strong> ${tricksText}`;
+            });
+        }
+        
+        return details;
+    }
+
+    formatCard(cardStr) {
+        if (!cardStr) return cardStr;
+        
+        // Parse card string like "AH" or "10S"
+        const suits = {
+            'H': { symbol: '♥', class: 'hearts' },
+            'D': { symbol: '♦', class: 'diamonds' },
+            'C': { symbol: '♣', class: 'clubs' },
+            'S': { symbol: '♠', class: 'spades' }
+        };
+        
+        const suitChar = cardStr.slice(-1);
+        const rank = cardStr.slice(0, -1);
+        
+        if (suits[suitChar]) {
+            const suit = suits[suitChar];
+            return `<span class="log-card ${suit.class}">${rank}${suit.symbol}</span>`;
+        }
+        
+        return `<span class="log-card">${cardStr}</span>`;
+    }
+
+    formatPlayerName(playerName, logType) {
+        let badgeClass = 'log-player-name';
+        
+        if (logType === 'trick_won') {
+            badgeClass = 'log-trick-winner';
+        }
+        
+        return `<span class="${badgeClass}">${playerName}</span>`;
     }
 }
 

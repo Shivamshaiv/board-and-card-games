@@ -7,6 +7,7 @@ import random
 from enum import Enum
 from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
+from datetime import datetime
 
 class Suit(Enum):
     HEARTS = "hearts"
@@ -46,6 +47,62 @@ class Player:
     def __post_init__(self):
         if not self.hand:
             self.hand = []
+
+@dataclass
+class LogEntry:
+    timestamp: str
+    round_num: int
+    trick_num: int
+    action_type: str  # "card_played", "trick_won", "prediction"
+    player_name: str
+    details: str
+    
+class GameLog:
+    def __init__(self):
+        self.entries: List[LogEntry] = []
+    
+    def log_prediction(self, round_num: int, player_name: str, prediction: int):
+        entry = LogEntry(
+            timestamp=datetime.now().strftime("%H:%M:%S"),
+            round_num=round_num,
+            trick_num=0,
+            action_type="prediction",
+            player_name=player_name,
+            details=f"predicted {prediction} tricks"
+        )
+        self.entries.append(entry)
+    
+    def log_card_played(self, round_num: int, trick_num: int, player_name: str, card: Card):
+        entry = LogEntry(
+            timestamp=datetime.now().strftime("%H:%M:%S"),
+            round_num=round_num,
+            trick_num=trick_num,
+            action_type="card_played",
+            player_name=player_name,
+            details=f"played {card}"
+        )
+        self.entries.append(entry)
+    
+    def log_trick_won(self, round_num: int, trick_num: int, winner_name: str, cards_played: List[Tuple[str, Card]]):
+        cards_str = ", ".join([f"{name}: {card}" for name, card in cards_played])
+        entry = LogEntry(
+            timestamp=datetime.now().strftime("%H:%M:%S"),
+            round_num=round_num,
+            trick_num=trick_num,
+            action_type="trick_won",
+            player_name=winner_name,
+            details=f"won trick with [{cards_str}]"
+        )
+        self.entries.append(entry)
+    
+    def get_logs_for_round(self, round_num: int) -> List[LogEntry]:
+        return [entry for entry in self.entries if entry.round_num == round_num]
+    
+    def get_all_logs(self) -> List[LogEntry]:
+        return self.entries.copy()
+    
+    def clear(self):
+        self.entries.clear()
 
 class Trick:
     def __init__(self):
@@ -95,6 +152,7 @@ class KachuGame:
         self.lead_suit: Optional[Suit] = None
         self.ai_intelligence = ai_intelligence
         self.ai_players: Dict[int, 'AIIntelligence'] = {}
+        self.game_log = GameLog()
         
         # Initialize players
         for i in range(num_players):
@@ -172,6 +230,12 @@ class KachuGame:
         
         if 0 <= prediction <= self.cards_per_round:
             self.players[player_index].predicted_tricks = prediction
+            # Log the prediction
+            self.game_log.log_prediction(
+                self.current_round, 
+                self.players[player_index].name, 
+                prediction
+            )
             return True
         return False
     
@@ -225,6 +289,15 @@ class KachuGame:
                 # Remove card from hand and add to trick
                 player.hand.pop(card_index)
                 self.current_trick.add_card(player_index, card)
+                
+                # Log the card play
+                trick_num = len(self.completed_tricks) + 1
+                self.game_log.log_card_played(
+                    self.current_round,
+                    trick_num,
+                    player.name,
+                    card
+                )
                 
                 # Update AI beliefs
                 for ai_player in self.ai_players.values():
@@ -317,11 +390,40 @@ class KachuGame:
         
         return {"error": "No hint available for current game state"}
     
+    def get_game_logs(self, round_num: Optional[int] = None) -> List[Dict]:
+        """Get game logs, optionally filtered by round"""
+        if round_num is not None:
+            entries = self.game_log.get_logs_for_round(round_num)
+        else:
+            entries = self.game_log.get_all_logs()
+        
+        return [
+            {
+                "timestamp": entry.timestamp,
+                "round": entry.round_num,
+                "trick": entry.trick_num,
+                "type": entry.action_type,
+                "player": entry.player_name,
+                "details": entry.details
+            }
+            for entry in entries
+        ]
+    
     def complete_trick(self):
         """Complete the current trick and determine winner"""
         if self.lead_suit:
             winner = self.current_trick.determine_winner(self.trump_suit, self.lead_suit)
             self.players[winner].tricks_won += 1
+            
+            # Log the trick completion
+            trick_num = len(self.completed_tricks) + 1
+            cards_played = [(self.players[player_idx].name, card) for player_idx, card in self.current_trick.cards]
+            self.game_log.log_trick_won(
+                self.current_round,
+                trick_num,
+                self.players[winner].name,
+                cards_played
+            )
             
             # Add to completed tricks
             self.completed_tricks.append(self.current_trick)

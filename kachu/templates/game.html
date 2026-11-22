@@ -34,6 +34,9 @@
                     <button id="hintBtn" class="btn btn-hint" title="Get AI Hint">
                         <i class="fas fa-lightbulb"></i>
                     </button>
+                    <button id="logBtn" class="btn btn-log" title="Toggle Game Log">
+                        <i class="fas fa-history"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -196,6 +199,31 @@
         <div class="status-bar" id="statusBar">
             <div class="status-message" id="statusMessage">
                 Starting game...
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Log Modal -->
+    <div id="gameLogModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-history"></i> Game Log</h2>
+                <div class="log-controls">
+                    <select id="logRoundFilter" class="round-filter">
+                        <option value="">All Rounds</option>
+                    </select>
+                    <button id="refreshLogBtn" class="btn-icon" title="Refresh Log">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button id="closeLogBtn" class="btn-icon" title="Close Log">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="gameLogContent" class="log-content">
+                    <!-- Log entries will be populated here -->
+                </div>
             </div>
         </div>
     </div>

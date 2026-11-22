@@ -494,29 +494,33 @@ body::before { display: none; }
 }
 
 .game-header {
-    background: #111827;
-    border-bottom: 1px solid #1f2937;
-    padding: 12px 20px;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border-bottom: 3px solid #3b82f6;
+    padding: 20px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #f9fafb;
+    color: #f1f5f9;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-height: 80px;
 }
 
 .game-info h1 {
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-size: 2.2rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .game-details {
     display: flex;
-    gap: 30px;
-    font-size: 0.9rem;
-    margin-top: 5px;
-    opacity: 0.9;
+    gap: 40px;
+    font-size: 1.1rem;
+    margin-top: 8px;
+    opacity: 0.95;
+    font-weight: 500;
 }
 
 .trump-info {
@@ -561,38 +565,43 @@ body::before { display: none; }
 }
 
 .player-info {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 12px 16px;
-    min-width: 150px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border: 2px solid #cbd5e1;
+    border-radius: 16px;
+    padding: 16px 20px;
+    min-width: 180px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    transition: box-shadow 0.15s ease, transform 0.1s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    transition: all 0.2s ease;
 }
 
 .player-info.current-player {
-    border-color: #3b82f6;
-    box-shadow: 0 4px 12px rgba(59,130,246,0.2);
-    transform: scale(1.02);
+    border-color: #ef4444;
+    background: linear-gradient(145deg, #fef2f2, #fff5f5);
+    box-shadow: 0 6px 16px rgba(239,68,68,0.25), 0 4px 8px rgba(239,68,68,0.15);
+    transform: scale(1.03);
 }
 
 .player-info.human-player {
-    border: 3px solid #74b9ff;
+    border: 3px solid #3b82f6;
+    background: linear-gradient(145deg, #eff6ff, #f0f9ff);
+    box-shadow: 0 6px 16px rgba(59,130,246,0.2), 0 4px 8px rgba(59,130,246,0.1);
 }
 
 .player-name {
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #1f2937;
 }
 
 .player-stats {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
-    font-size: 0.85rem;
-    margin-top: 8px;
+    gap: 18px;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    font-weight: 600;
 }
 
 .stat {
@@ -710,22 +719,33 @@ body::before { display: none; }
 }
 
 .card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 12px 8px;
-    min-width: 52px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border: 2px solid #cbd5e1;
+    border-radius: 16px;
+    padding: 16px 12px;
+    min-width: 80px;
+    height: 120px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.1s ease, box-shadow 0.15s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
     user-select: none;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .card::before { display: none; }
 
-.card:hover { transform: translateY(-4px); box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
+.card:hover { 
+    transform: translateY(-4px) scale(1.02); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1);
+    border-color: #3b82f6;
+}
 
 .card.playable { border: 2px solid #10b981; background: #ffffff; box-shadow: 0 4px 10px rgba(16,185,129,0.15); }
 
@@ -746,16 +766,16 @@ body::before { display: none; }
 }
 
 .card-rank {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 4px;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 6px;
     position: relative;
     z-index: 1;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
 .card-suit {
-    font-size: 1.4rem;
+    font-size: 2.2rem;
     position: relative;
     z-index: 1;
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
@@ -955,16 +975,21 @@ body::before { display: none; }
 }
 
 .bidding-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 8px;
-    padding: 8px 6px;
-    min-width: 40px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 12px 8px;
+    min-width: 60px;
+    height: 80px;
     text-align: center;
     box-shadow: 
-        0 3px 8px rgba(0,0,0,0.1),
-        0 1px 3px rgba(0,0,0,0.06);
-    font-size: 0.9rem;
+        0 4px 12px rgba(0,0,0,0.12),
+        0 2px 4px rgba(0,0,0,0.08);
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     transition: all 0.15s ease;
     position: relative;
     overflow: hidden;
@@ -989,17 +1014,19 @@ body::before { display: none; }
 }
 
 .bidding-card-rank {
-    font-weight: 700;
-    margin-bottom: 3px;
+    font-weight: 800;
+    margin-bottom: 4px;
     position: relative;
     z-index: 1;
-    font-size: 1rem;
+    font-size: 1.3rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .bidding-card-suit {
-    font-size: 1.1rem;
+    font-size: 1.6rem;
     position: relative;
     z-index: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .bidding-card-suit.hearts,
@@ -1518,6 +1545,26 @@ body::before { display: none; }
     transform: translateY(0);
 }
 
+.btn-log {
+    background: #8b5cf6;
+    color: white;
+    padding: 10px 14px;
+    font-size: 14px;
+    margin-left: 8px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-log:hover {
+    background: #7c3aed;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(139,92,246,0.3);
+}
+
 /* Hint Toggle Section */
 .hint-toggle-section {
     text-align: center;
@@ -1687,11 +1734,13 @@ body::before { display: none; }
 
 /* Status Bar */
 .status-bar {
-    background: #111827;
-    color: #f9fafb;
-    padding: 14px 24px;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #f1f5f9;
+    padding: 20px 32px;
     text-align: center;
     font-weight: 600;
+    border-bottom: 3px solid #3b82f6;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .status-bar::before {
@@ -1751,8 +1800,10 @@ body::before { display: none; }
     }
     
     .card {
-        min-width: 40px;
-        padding: 8px 6px;
+        min-width: 65px;
+        height: 95px;
+        padding: 12px 8px;
+        font-size: 14px;
     }
     
     .modal-content {
@@ -1797,15 +1848,207 @@ body::before { display: none; }
     }
     
     .card {
-        min-width: 35px;
-        padding: 6px 4px;
+        min-width: 55px;
+        height: 80px;
+        padding: 10px 6px;
+        font-size: 12px;
     }
     
     .card-rank {
-        font-size: 0.9rem;
+        font-size: 1.2rem;
     }
     
     .card-suit {
-        font-size: 1.1rem;
+        font-size: 1.5rem;
     }
+}
+
+/* Game Log Styles */
+.log-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.round-filter {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.round-filter:hover {
+    border-color: #cbd5e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.log-content {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.log-entry {
+    padding: 16px 20px;
+    border-left: 4px solid #e2e8f0;
+    margin-bottom: 12px;
+    background: linear-gradient(145deg, #f8fafc, #ffffff);
+    border-radius: 0 12px 12px 0;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-right: 1px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.log-entry:hover {
+    background: linear-gradient(145deg, #edf2f7, #f9fafb);
+    border-left-color: #4299e1;
+    transform: translateX(2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.log-entry.prediction {
+    border-left-color: #10b981;
+    background: linear-gradient(145deg, #ecfdf5, #f0fff4);
+}
+
+.log-entry.card-played {
+    border-left-color: #3b82f6;
+    background: linear-gradient(145deg, #eff6ff, #dbeafe);
+}
+
+.log-entry.trick-won {
+    border-left-color: #f59e0b;
+    background: linear-gradient(145deg, #fffbeb, #fef3c7);
+}
+
+.log-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.log-entry-time {
+    font-size: 12px;
+    color: #718096;
+    background: #ffffff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.log-entry-round {
+    font-size: 12px;
+    color: #4a5568;
+    font-weight: 600;
+    background: #e2e8f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.log-entry-player {
+    font-weight: 700;
+    color: #2d3748;
+    margin-right: 8px;
+}
+
+.log-entry-details {
+    color: #4a5568;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-top: 4px;
+}
+
+/* Card styling within logs */
+.log-card {
+    display: inline-block;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: 0 3px;
+    font-family: 'Inter', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: relative;
+    top: -1px;
+}
+
+.log-card.hearts,
+.log-card.diamonds {
+    color: #dc2626;
+    border-color: #fca5a5;
+    background: linear-gradient(145deg, #fef2f2, #ffffff);
+}
+
+.log-card.clubs,
+.log-card.spades {
+    color: #1f2937;
+    border-color: #9ca3af;
+    background: linear-gradient(145deg, #f9fafb, #ffffff);
+}
+
+.log-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Player name styling in logs */
+.log-player-name {
+    background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+    color: #0369a1;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    border: 1px solid #bae6fd;
+    margin-right: 6px;
+    font-size: 13px;
+}
+
+/* Trick result styling */
+.log-trick-cards {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-radius: 6px;
+    border-left: 3px solid #3b82f6;
+    font-family: 'Inter', monospace;
+    line-height: 1.5;
+}
+
+.log-trick-winner {
+    color: #059669;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid #86efac;
+    margin-right: 6px;
+}
+
+.log-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.log-content::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.log-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.log-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
