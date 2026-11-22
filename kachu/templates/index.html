@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kachu (Judgment) Card Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Floating card suits animation -->
+    <div class="floating-suits">
+        <div class="floating-suit suit-1">♠</div>
+        <div class="floating-suit suit-2">♥</div>
+        <div class="floating-suit suit-3">♦</div>
+        <div class="floating-suit suit-4">♣</div>
+        <div class="floating-suit suit-5">♠</div>
+        <div class="floating-suit suit-6">♥</div>
+        <div class="floating-suit suit-7">♦</div>
+        <div class="floating-suit suit-8">♣</div>
+    </div>
+    
+    <div class="container">
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="game-header">
+                <div class="game-logo">
+                    <i class="fas fa-heart game-icon"></i>
+                    <h1>Kachu</h1>
+                    <p class="subtitle">The Judgment Card Game</p>
+                </div>
+            </div>
+            
+            <div class="welcome-card">
+                <div class="welcome-content">
+                    <div class="welcome-header">
+                        <h2>Welcome to Kachu!</h2>
+                        <p class="welcome-subtitle">A strategic trick-taking game where you predict exactly how many tricks you'll win.</p>
+                        <div class="game-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-users"></i>
+                                <span>2-8 Players</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span>15-30 min</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Strategy Game</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-setup">
+                        <div class="input-group">
+                            <label for="playerName">Your Name:</label>
+                            <input type="text" id="playerName" placeholder="Enter your name" value="You" maxlength="20">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="numPlayers">Number of Players:</label>
+                            <select id="numPlayers">
+                                <option value="2">2 Players</option>
+                                <option value="3">3 Players</option>
+                                <option value="4" selected>4 Players</option>
+                                <option value="5">5 Players</option>
+                                <option value="6">6 Players</option>
+                                <option value="7">7 Players</option>
+                                <option value="8">8 Players</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group ai-group">
+                            <label for="aiIntelligence">
+                                <i class="fas fa-brain"></i>
+                                AI Intelligence Level:
+                            </label>
+                            <div class="ai-intelligence-container">
+                                <input type="range" id="aiIntelligence" min="0" max="10" value="5" class="ai-slider">
+                                <div class="ai-labels">
+                                    <span class="ai-label-left">
+                                        <i class="fas fa-seedling"></i>
+                                        Beginner
+                                    </span>
+                                    <div class="ai-value-display">
+                                        <span class="ai-value" id="aiValue">5</span>
+                                        <div class="ai-level-badge" id="aiLevelBadge">Balanced</div>
+                                    </div>
+                                    <span class="ai-label-right">
+                                        Expert
+                                        <i class="fas fa-crown"></i>
+                                    </span>
+                                </div>
+                                <div class="ai-description" id="aiDescription">
+                                    Balanced AI - Uses basic strategy with some card counting
+                                </div>
+                                <div class="ai-features" id="aiFeatures">
+                                    <div class="ai-feature active">
+                                        <i class="fas fa-cards-blank"></i>
+                                        Basic Strategy
+                                    </div>
+                                    <div class="ai-feature active">
+                                        <i class="fas fa-eye"></i>
+                                        Card Counting
+                                    </div>
+                                    <div class="ai-feature">
+                                        <i class="fas fa-chess"></i>
+                                        Monte Carlo
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="startGameBtn" class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            Start New Game
+                        </button>
+                        
+                        <div class="divider">
+                            <span>or</span>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="gameId">Join Game:</label>
+                            <input type="text" id="gameId" placeholder="Enter game ID">
+                        </div>
+                        
+                        <button id="joinGameBtn" class="btn btn-secondary">
+                            <i class="fas fa-users"></i>
+                            Join Game
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-rules">
+                    <h3><i class="fas fa-info-circle"></i> How to Play</h3>
+                    <ul>
+                        <li>Each round, you'll receive a certain number of cards</li>
+                        <li>Predict exactly how many tricks you'll win</li>
+                        <li>Score 10 + 2×tricks if you're exact, lose 2×difference if wrong</li>
+                        <li>Highest score after all rounds wins!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loading-screen hidden" id="loadingScreen">
+            <div class="spinner"></div>
+            <p>Setting up your game...</p>
+        </div>
+        
+        <div class="error-message hidden" id="errorMessage">
+            <div class="error-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p id="errorText"></p>
+                <button id="errorOkBtn" class="btn btn-secondary">OK</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+.camel-odds {
+  --co-ink: #264535;
+  --co-secondary: #526450;
+  --co-line: #d8ceb5;
+  --co-paper: #fff9e9;
+  display: grid;
+  gap: 13px;
+  min-width: 0;
+  color: var(--co-ink);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+}
+.co-period {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  gap: 3px;
+  border: 1px solid #b9ab8c;
+  border-radius: 8px;
+  background: #e9e2cc;
+}
+.camel-odds .co-period button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 6px;
+  min-height: 34px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: #445846;
+  font-family: inherit;
+  font-size: 0.87rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.camel-odds .co-period button[aria-pressed='true'] {
+  border-color: #24462e;
+  background: #244d39;
+  color: #fff2cd;
+  box-shadow:
+    inset 0 1px #e8d9a522,
+    0 1px 2px #28291630;
+}
+.co-period button[aria-pressed='true'] svg {
+  color: #f2cf8e;
+}
+.camel-odds .co-period button:focus-visible,
+.camel-odds .co-selector select:focus-visible,
+.co-payouts summary:focus-visible {
+  outline: 2px solid #a96522;
+  outline-offset: 2px;
+}
+.co-place {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+.co-selector {
+  position: relative;
+  display: inline-flex;
+}
+.camel-odds .co-selector select {
+  appearance: none;
+  cursor: pointer;
+  min-height: 32px;
+  max-width: 100%;
+  padding: 4px 27px 4px 10px;
+  border: 1px solid #b8aa8a;
+  border-radius: 5px;
+  color: var(--co-ink);
+  background: #fff9e8;
+  font: inherit;
+}
+.co-selector svg {
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #5c6c50;
+  pointer-events: none;
+}
+.co-sheet {
+  min-width: 0;
+  border: 1px solid #bcab86;
+  border-top: 2px solid #a17a40;
+  border-radius: 7px;
+  overflow: hidden;
+  background: var(--co-paper);
+  box-shadow: 0 1px 2px #403d2412;
+}
+.co-chances,
+.co-payouts table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+}
+.co-name-column {
+  width: 32%;
+}
+.co-chances th,
+.co-chances td,
+.co-payouts th,
+.co-payouts td {
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+.co-chances thead {
+  background: #f1e6cb;
+}
+.co-chances thead th,
+.co-payouts thead th {
+  color: #56634d;
+  text-align: left;
+  font-size: 0.74rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.co-chances tbody tr,
+.co-payouts tbody tr {
+  border-top: 1px solid var(--co-line);
+}
+.co-chances tbody th,
+.co-payouts tbody th {
+  text-align: left;
+  font-weight: 700;
+}
+.co-camel {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.co-camel > span {
+  display: inline-flex;
+}
+.co-camel .emblem {
+  width: 20px;
+  height: 20px;
+  font-size: 0.75rem;
+  flex: none;
+}
+.co-reading {
+  display: grid;
+  grid-template-columns: minmax(15px, 1fr) 4.65em;
+  align-items: center;
+  gap: 7px;
+}
+.co-reading strong {
+  text-align: right;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.co-track {
+  display: block;
+  height: 8px;
+  border-radius: 3px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(25% - 1px), #ad9e7638 calc(25% - 1px) 25%),
+    #e7e0ca;
+  box-shadow: inset 0 1px 2px #6a59401a;
+}
+.co-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--runner-ink);
+  box-shadow: inset 0 0 0 1px #52432824;
+}
+.co-sheet .camel-odds-basis {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 8px 10px;
+  border-top: 1px solid var(--co-line);
+  background: #f2ecd9;
+  color: var(--co-secondary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+.camel-odds-basis svg,
+.co-payouts summary svg {
+  flex: none;
+  color: #7d693f;
+}
+.camel-odds-basis strong {
+  color: var(--co-ink);
+  font-weight: 700;
+}
+.co-payouts {
+  border-block: 1px solid var(--co-line);
+  padding: 3px 0;
+}
+.co-payouts summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  list-style: none;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.co-payouts summary::-webkit-details-marker {
+  display: none;
+}
+.co-payouts summary svg:last-child {
+  margin-left: auto;
+}
+.co-payouts[open] summary svg:last-child {
+  transform: rotate(180deg);
+}
+.camel-odds .co-payouts p {
+  margin: 3px 0 8px;
+  color: var(--co-secondary);
+  font-size: 0.79rem;
+  line-height: 1.45;
+}
+.co-payouts table {
+  margin-bottom: 7px;
+}
+.co-payouts th,
+.co-payouts td {
+  padding: 6px 3px;
+}
+.co-payouts th:first-child {
+  width: 37%;
+}
+.co-payouts thead th:not(:first-child),
+.co-payouts td {
+  text-align: right;
+}
+.camel-odds .ra-notes {
+  margin: 0;
+}
+@media (max-width: 360px) {
+  .co-chances th,
+  .co-chances td {
+    padding: 8px 6px;
+  }
+  .co-camel {
+    gap: 4px;
+  }
+  .co-camel .emblem {
+    width: 17px;
+    height: 17px;
+    font-size: 0.66rem;
+  }
+  .co-reading {
+    gap: 5px;
+  }
+}

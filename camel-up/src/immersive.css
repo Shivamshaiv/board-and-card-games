@@ -1,0 +1,424 @@
+/* The menu and race share one palette: brass, lacquered walnut and deep blue-green shade. */
+.revealed-card {
+  width: 42px;
+  height: 45px;
+  object-fit: cover;
+  border: 1px solid #ac986e;
+  border-radius: 3px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .finish-result:last-of-type .revealed-card {
+    animation: card-face-in 0.22s ease-out;
+  }
+  @keyframes card-face-in {
+    from {
+      transform: perspective(260px) rotateY(70deg);
+      opacity: 0.4;
+    }
+    to {
+      transform: perspective(260px) rotateY(0);
+      opacity: 1;
+    }
+  }
+}
+:root {
+  --brass: #e6b96e;
+  --cinema-ink: #101e20;
+  --hud: #112525;
+  --ivory: #fff3d8;
+}
+.mast {
+  background: #102323;
+  border-color: #947849;
+  border-bottom-width: 1px;
+}
+.mast-inner {
+  max-width: none;
+  padding-inline: clamp(18px, 3.4vw, 78px);
+  height: 56px;
+}
+.mast-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.mast-controls > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  color: #f4e9cd;
+  min-height: 38px;
+  min-width: 38px;
+  border-radius: 4px;
+}
+.mast-controls > button:hover {
+  background: #ffffff12;
+}
+.mast-controls > .header-help {
+  padding: 7px 10px;
+  margin-left: 4px;
+}
+body:has(.showcase) {
+  background: #142825;
+}
+body:has(.showcase) .mast {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  background: linear-gradient(#0a191ccf, #0b1c1c26);
+  border-color: #f3d7af42;
+}
+.showcase {
+  position: relative;
+  isolation: isolate;
+  min-height: max(610px, 100svh);
+  color: var(--ivory);
+  overflow: hidden;
+  background: #172b29;
+}
+.showcase-world,
+.showcase-shade,
+.cinematic-poster,
+.showcase-world > .cu-raceboard {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.cinematic-poster {
+  object-fit: cover;
+  object-position: 58% 55%;
+}
+.showcase-world > .cu-raceboard {
+  transition: opacity 0.6s ease;
+  min-height: 0;
+  border-radius: 0;
+  aspect-ratio: auto;
+}
+.showcase-world > .cu-flat-board {
+  opacity: 0;
+}
+.showcase-shade {
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #071617ee 0%, #0c2021e0 17%, #1024259c 34%, transparent 65%),
+    linear-gradient(0deg, #0e2023b3, transparent 17%, transparent 87%, #1726283b);
+}
+.title-hud {
+  z-index: 2;
+  position: relative;
+  margin-left: clamp(26px, 6.2vw, 140px);
+  padding-block: clamp(135px, 26vh, 330px) 130px;
+  max-width: clamp(350px, 34vw, 530px);
+  pointer-events: none;
+  text-shadow: 0 2px 18px #04171765;
+}
+.title-hud button {
+  pointer-events: auto;
+}
+.title-edition {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #efc985;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.title-edition span {
+  display: inline-block;
+  width: 35px;
+  height: 1px;
+  background: #efc985;
+}
+.title-hud h1 {
+  font-family: var(--serif);
+  font-size: clamp(5.6rem, 7.7vw, 9rem);
+  line-height: 1.02;
+  letter-spacing: -0.075em;
+  margin: 14px 0 20px;
+  color: #fff4d9;
+  white-space: nowrap;
+}
+.title-hud h1 em {
+  color: #edbd71;
+  font-weight: 700;
+}
+.title-hud p {
+  font-size: clamp(1.03rem, 1.4vw, 1.28rem);
+  line-height: 1.53;
+  color: #f4ecd6;
+  max-width: 35ch;
+}
+.title-spec,
+.title-spec span,
+.showcase-bottom,
+.showcase-bottom > div,
+.showcase-bottom span,
+.title-choices,
+.showcase-bottom button,
+.gold-button,
+.glass-button,
+.title-resume,
+.orbit-hint {
+  display: flex;
+  align-items: center;
+}
+.title-spec {
+  gap: 20px;
+  margin: 23px 0 24px;
+}
+.title-spec span {
+  gap: 7px;
+  font-size: 0.88rem;
+  color: #eadcbc;
+}
+.title-spec svg {
+  color: #dfba7f;
+}
+.title-choices {
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.gold-button,
+.glass-button {
+  gap: 9px;
+  min-height: 49px;
+  padding: 13px 19px;
+  border-radius: 5px;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+.gold-button {
+  color: #282519;
+  border: 1px solid #f4d28d;
+  background: linear-gradient(145deg, #fae3ac, #d1a15b);
+  box-shadow:
+    0 6px 20px #08151759,
+    inset 0 1px #fff7d5;
+}
+.gold-button:hover {
+  filter: brightness(1.07);
+}
+.glass-button {
+  color: #fff4db;
+  border: 1px solid #d6bb8bb8;
+  background: #102423cc;
+}
+.glass-button:hover {
+  background: #2e4241;
+}
+.title-resume,
+.showcase-bottom button {
+  color: #f5e5c9;
+  background: none;
+  border: 0;
+  gap: 8px;
+  font-weight: 600;
+}
+.title-resume {
+  margin-top: 13px;
+  padding: 7px 0;
+}
+.showcase-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 17px clamp(20px, 3.4vw, 78px);
+  font-size: 0.88rem;
+  border-top: 1px solid #e4d4b737;
+  background: #0e2024a6;
+  backdrop-filter: blur(8px);
+}
+.showcase-bottom > div {
+  gap: 12px;
+}
+.showcase-bottom span,
+.showcase-bottom button {
+  gap: 7px;
+}
+.showcase-bottom button {
+  padding: 4px 9px;
+  min-height: 31px;
+}
+.showcase-bottom button:hover {
+  color: #ffdca1;
+}
+.exploring .showcase-shade {
+  background: linear-gradient(0deg, #10222270, transparent 13%);
+}
+.orbit-hint {
+  position: absolute;
+  top: 72px;
+  right: 4vw;
+  color: #fff4d8;
+  border: 1px solid #c1a7788a;
+  background: #132526bb;
+  border-radius: 3px;
+  padding: 7px 10px;
+  gap: 8px;
+  pointer-events: none;
+  font-size: 0.87rem;
+}
+.dice-tray {
+  border-block: 1px solid #c4af85;
+  padding: 8px 0;
+  margin: 7px 0;
+  color: #334639;
+}
+.dice-tray > b {
+  display: block;
+  font-size: 0.85rem;
+}
+.dice-tray > div {
+  display: flex;
+  gap: 5px;
+  margin: 5px 0;
+}
+.dice-tray small {
+  display: block;
+  color: #596453;
+  font-size: 0.72rem;
+}
+.tent-die {
+  display: grid;
+  place-items: center;
+  min-width: 23px;
+  height: 23px;
+  border-radius: 4px;
+  font:
+    700 0.87rem/1 system-ui,
+    sans-serif;
+  border: 1px solid #0002;
+}
+.tent-die.unrolled {
+  box-shadow:
+    inset 0 1px 1px #fff7,
+    0 2px 0 #563d22;
+}
+.tent-die.revealed {
+  outline: 1px dashed #745b3c;
+  outline-offset: 1px;
+  border-radius: 50%;
+}
+.form-error {
+  color: #8b301c !important;
+  padding: 7px 10px;
+  background: #fbe6ca;
+  border-radius: 4px;
+}
+body:has(.short-page) {
+  background:
+    linear-gradient(90deg, #1c2e2ce0, #1e2d28ad),
+    url('/art/courtyard.webp') center/cover fixed #263a33;
+}
+.short-page > .back {
+  color: #fff1ce;
+}
+.short-page > .paper {
+  background: #fff6e7f5;
+  box-shadow: 0 15px 60px #0e171860;
+}
+@media (max-width: 900px) {
+  .title-hud {
+    max-width: 380px;
+    margin-left: 4vw;
+  }
+  .title-hud h1 {
+    font-size: 5.55rem;
+  }
+}
+@media (max-width: 730px) {
+  .mast-inner {
+    height: 50px;
+  }
+  .showcase {
+    min-height: max(630px, 100svh);
+  }
+  .title-hud {
+    margin-left: 6vw;
+    padding-block: clamp(235px, 40svh, 405px) 90px;
+    max-width: 84vw;
+  }
+  .showcase-shade {
+    background: linear-gradient(0deg, #0b1b1df5 7%, #102325df 28%, #11272996 48%, transparent 73%);
+  }
+  .title-hud h1 {
+    font-size: clamp(4.6rem, 14vw, 6.1rem);
+    margin: 7px 0 10px;
+  }
+  .title-hud p {
+    max-width: 39ch;
+    font-size: 1rem;
+  }
+  .title-spec {
+    margin: 13px 0 15px;
+  }
+  .title-edition {
+    font-size: 0.68rem;
+  }
+  .showcase-bottom {
+    padding: 10px 4vw;
+    font-size: 0.78rem;
+  }
+  .showcase-bottom > div {
+    gap: 2px;
+  }
+  .showcase-bottom button {
+    font-size: 0.8rem;
+    padding: 5px;
+  }
+  .gold-button,
+  .glass-button {
+    min-height: 44px;
+    padding: 11px 13px;
+    font-size: 0.9rem;
+  }
+  .showcase-bottom > span {
+    max-width: 38%;
+  }
+}
+@media (max-width: 390px) {
+  .title-hud {
+    margin-left: 5vw;
+    max-width: 92vw;
+  }
+  .title-choices {
+    gap: 6px;
+  }
+  .showcase-bottom > span {
+    font-size: 0.71rem;
+  }
+  .mast-controls {
+    gap: 0;
+  }
+  .mast-controls > .header-help {
+    margin: 0;
+    padding-inline: 5px;
+  }
+}
+@media (max-height: 560px) and (min-width: 731px) {
+  .showcase {
+    min-height: 480px;
+  }
+  .title-hud {
+    padding-top: 85px;
+    padding-bottom: 80px;
+  }
+  .title-hud h1 {
+    font-size: 4.6rem;
+  }
+  .title-spec {
+    margin: 10px 0;
+  }
+}
+/* Desktop uses a full-window world. Keep HUD edges outside the camera's safe playing area. */

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kachu Game - {{ game_id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Game Header -->
+        <div class="game-header">
+            <div class="game-info">
+                <h1><i class="fas fa-heart"></i> Kachu</h1>
+                <div class="game-details">
+                    <span class="game-id">Game ID: <strong id="gameIdDisplay">{{ game_id }}</strong></span>
+                    <span class="round-info">Round <span id="currentRound">1</span> of <span id="maxRounds">13</span></span>
+                </div>
+            </div>
+            
+            <div class="trump-info" id="trumpInfo">
+                <div class="trump-card hidden" id="trumpCard">
+                    <span class="trump-label">Trump:</span>
+                    <div class="trump-suit" id="trumpSuit"></div>
+                </div>
+                <div class="ai-controls">
+                    <div class="ai-intelligence-control">
+                        <label for="gameAiSlider">AI Level:</label>
+                        <input type="range" id="gameAiSlider" min="0" max="10" value="5" class="ai-slider-small">
+                        <span id="gameAiValue">5</span>
+                    </div>
+                    <button id="hintBtn" class="btn btn-hint" title="Get AI Hint">
+                        <i class="fas fa-lightbulb"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Board -->
+        <div class="game-board">
+            <!-- Players Area -->
+            <div class="players-area" id="playersArea">
+                <!-- Players will be dynamically generated here -->
+            </div>
+            
+            <!-- Trick Area -->
+            <div class="trick-area" id="trickArea">
+                <div class="trick-center">
+                    <div class="trick-cards" id="trickCards">
+                        <!-- Played cards will appear here -->
+                    </div>
+                    <div class="trick-info" id="trickInfo">
+                        <span id="leadSuit"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Player's Hand -->
+            <div class="player-hand-area" id="playerHandArea">
+                <div class="hand-header">
+                    <h3 id="playerName">Your Hand</h3>
+                    <div class="hand-info">
+                        <span id="handSize">0 cards</span>
+                    </div>
+                </div>
+                <div class="player-hand" id="playerHand">
+                    <!-- Player's cards will appear here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bidding Modal -->
+        <div class="modal hidden" id="biddingModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-gavel"></i> Make Your Prediction</h2>
+                    <p>How many tricks will you win this round?</p>
+                </div>
+                <div class="modal-body">
+                    <div class="bidding-info">
+                        <div class="cards-this-round">
+                            <span>Cards this round: <strong id="cardsThisRound">0</strong></span>
+                        </div>
+                        <div class="trump-display" id="trumpDisplay">
+                            <span>Trump suit: <span id="trumpSuitDisplay">None</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="bidding-hand">
+                        <h4>Your Cards:</h4>
+                        <div class="bidding-cards" id="biddingCards">
+                            <!-- Player's cards will be shown here -->
+                        </div>
+                    </div>
+                    
+                    <div class="hint-toggle-section">
+                        <button id="toggleHint" class="btn btn-hint-toggle">
+                            <i class="fas fa-lightbulb"></i>
+                            Show AI Hint
+                        </button>
+                    </div>
+                    
+                    <div class="hint-section hidden" id="hintSection">
+                        <div class="hint-content" id="hintContent">
+                            <div class="hint-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>AI Suggestion</span>
+                                <div class="hint-controls">
+                                    <button id="refreshHint" class="btn-icon" title="Refresh hint">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                    <button id="hideHint" class="btn-icon" title="Hide hint">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="hint-details" id="hintDetails">
+                                <!-- Hint details will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prediction-controls">
+                        <div class="prediction-slider">
+                            <input type="range" id="predictionSlider" min="0" max="10" value="0" class="slider">
+                            <div class="prediction-value">
+                                <span id="predictionValue">0</span> tricks
+                            </div>
+                        </div>
+                        
+                        <div class="prediction-buttons">
+                            <button class="prediction-btn" data-value="0">0</button>
+                            <button class="prediction-btn" data-value="1">1</button>
+                            <button class="prediction-btn" data-value="2">2</button>
+                            <button class="prediction-btn" data-value="3">3</button>
+                            <button class="prediction-btn" data-value="4">4</button>
+                        </div>
+                    </div>
+                    
+                    <button id="confirmPrediction" class="btn btn-primary">
+                        <i class="fas fa-check"></i>
+                        Confirm Prediction
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Round Results Modal -->
+        <div class="modal hidden" id="roundResultsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-trophy"></i> Round Results</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="results-table" id="resultsTable">
+                        <!-- Results will be populated here -->
+                    </div>
+                    <button id="nextRoundBtn" class="btn btn-primary">
+                        <i class="fas fa-arrow-right"></i>
+                        Next Round
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Over Modal -->
+        <div class="modal hidden" id="gameOverModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-crown"></i> Game Over!</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="winner-announcement" id="winnerAnnouncement">
+                        <!-- Winner will be announced here -->
+                    </div>
+                    <div class="final-scores" id="finalScores">
+                        <!-- Final scores will be shown here -->
+                    </div>
+                    <div class="game-over-actions">
+                        <button id="newGameBtn" class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            New Game
+                        </button>
+                        <button id="backToMenuBtn" class="btn btn-secondary">
+                            <i class="fas fa-home"></i>
+                            Back to Menu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Status Bar -->
+        <div class="status-bar" id="statusBar">
+            <div class="status-message" id="statusMessage">
+                Starting game...
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const GAME_ID = "{{ game_id }}";
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>

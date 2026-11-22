@@ -1,0 +1,118 @@
+.next-roll {
+  display: grid;
+  gap: 13px;
+  color: #203c31;
+}
+.next-roll h3,
+.next-roll p {
+  margin: 0;
+}
+.next-roll h3 {
+  font: 700 1.08rem var(--serif, Georgia, serif);
+}
+.next-roll fieldset {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  min-width: 0;
+}
+.next-roll legend {
+  font-weight: 700;
+  font-size: 0.84rem;
+  margin-bottom: 6px;
+}
+.nr-odds {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+.nr-odds > div {
+  border: 1px solid #cabc9d;
+  border-radius: 5px;
+  background: #f0e8d5;
+  padding: 9px;
+  display: grid;
+  gap: 2px;
+}
+.nr-odds b {
+  font-weight: 700;
+  font-size: 1.28rem;
+  font-variant-numeric: tabular-nums;
+}
+.nr-odds span,
+.nr-result small {
+  font-size: 0.77rem;
+  color: #536248;
+}
+.nr-dice,
+.nr-choice,
+.nr-face,
+.nr-track,
+.nr-result header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nr-dice,
+.nr-face,
+.nr-track {
+  flex-wrap: wrap;
+}
+.nr-face {
+  gap: 16px;
+}
+.nr-dice button,
+.nr-choice button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 34px;
+  padding: 4px 7px;
+  border: 1px solid #ada990;
+  border-radius: 5px;
+  background: #fcf6e9;
+  color: #264334;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+.nr-dice .emblem {
+  width: 18px;
+  height: 18px;
+  font-size: 0.7rem;
+}
+.nr-choice button {
+  min-width: 34px;
+  justify-content: center;
+}
+.nr-dice button[aria-pressed='true'],
+.nr-choice button[aria-pressed='true'] {
+  border-color: #28583e;
+  background: #294d3d;
+  color: #fff3d9;
+}
+.nr-result {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #b29a66;
+  border-left: 3px solid #ab8647;
+  border-radius: 5px;
+  background: #f9f1df;
+}
+.nr-result p {
+  font-size: 0.86rem;
+  line-height: 1.42;
+}
+.nr-result p svg {
+  display: inline;
+  vertical-align: -2px;
+  color: #7c683c;
+}
+.nr-result small {
+  border-top: 1px solid #d1c3a2;
+  padding-top: 7px;
+}
+.nr-track {
+  font-size: 0.92rem;
+  color: #375740;
+}

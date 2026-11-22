@@ -1,0 +1,209 @@
+/* Native modal surfaces own vertical gestures. A nonmodal desktop race advisor leaves
+   the live table scrollable. Neither rule intercepts camera or page wheel input. */
+html:has(dialog:modal),
+body:has(dialog:modal) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+dialog:modal {
+  overscroll-behavior: contain;
+}
+.dialog[open] {
+  overflow: hidden;
+  max-height: min(86dvh, calc(100dvh - 20px));
+}
+.dialog > .dialog-body {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  max-height: calc(min(86dvh, 100dvh - 20px) - 2px);
+}
+.dialog .section-head {
+  flex: none;
+  margin: 0;
+  gap: 12px;
+  padding: clamp(13px, 2.4vw, 23px) clamp(16px, 3vw, 28px) 12px;
+  background: var(--paper, #faf3df);
+  border-bottom: 1px solid #cfbea0;
+}
+.dialog .section-head h2 {
+  margin: 0;
+}
+.dialog .section-head button {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  min-height: 36px;
+}
+.dialog .dialog-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding: 12px;
+  padding: 14px clamp(16px, 3vw, 28px) clamp(18px, 3vw, 28px);
+}
+.dialog .dialog-scroll:focus-visible {
+  outline: 2px solid #b87d36;
+  outline-offset: -3px;
+}
+.audio-mixer {
+  display: grid;
+  gap: 18px;
+  color: #263f32;
+}
+.audio-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 7px;
+  border: 1px solid #acb294;
+  background: #edf0de;
+  color: #294a37;
+  font:
+    700 1rem 'DM Sans',
+    sans-serif;
+}
+.audio-toggle > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.audio-state {
+  font-size: 0.85rem;
+}
+.audio-state i {
+  display: block;
+  width: 32px;
+  height: 19px;
+  border-radius: 12px;
+  padding: 3px;
+  background: #777f70;
+}
+.audio-state i::after {
+  content: '';
+  display: block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff8e5;
+}
+.audio-toggle[aria-checked='true'] .audio-state i {
+  background: #2b6648;
+}
+.audio-toggle[aria-checked='true'] .audio-state i::after {
+  margin-left: auto;
+}
+.audio-slider {
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+}
+.audio-slider > span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.audio-slider output {
+  font-size: 0.83rem;
+  color: #50614f;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.audio-slider input[type='range'] {
+  width: 100%;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  accent-color: #2b6347;
+  cursor: pointer;
+}
+.audio-tempo {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.audio-tempo legend {
+  padding: 0;
+  margin: 0 0 7px;
+  font-weight: 700;
+}
+.audio-tempo > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+.audio-tempo label {
+  position: relative;
+  cursor: pointer;
+}
+.audio-tempo input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+.audio-tempo label > span {
+  display: grid;
+  gap: 1px;
+  text-align: center;
+  padding: 7px 3px;
+  border-radius: 6px;
+  border: 1px solid #b8ad90;
+  background: #fbf5e6;
+  font-weight: 700;
+}
+.audio-tempo b {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.audio-tempo input:checked + span {
+  background: #25523e;
+  color: #fff0d2;
+  border-color: #25523e;
+}
+.audio-tempo input:focus-visible + span {
+  outline: 3px solid #cc842e;
+  outline-offset: 2px;
+}
+.mast .mast-help-short {
+  display: none;
+}
+@media (max-width: 400px) {
+  .mast .brand,
+  .mast .mast-brand-title,
+  .mast .header-help {
+    white-space: nowrap;
+  }
+  .mast .brand {
+    flex: 0 0 auto;
+    gap: 5px;
+  }
+  .mast .mast-brand-title {
+    font-size: 1.1rem;
+  }
+  .mast .mast-controls {
+    gap: 0;
+  }
+  .mast .mast-controls > button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .mast .mast-controls > .header-help {
+    gap: 5px;
+    margin: 0;
+    padding-inline: 5px;
+  }
+  .mast .mast-help-full {
+    display: none;
+  }
+  .mast .mast-help-short {
+    display: inline;
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "camel-up-tabletop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "postbuild": "node scripts/compress-build.mjs",
+    "start": "node server/index.mjs",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run",
+    "test:lan": "node --test tests/lan.test.mjs tests/assets.test.mjs",
+    "test": "npm run test:unit && npm run test:lan",
+    "bench:bots": "node scripts/benchmark-bots.mjs",
+    "bench:advisor": "node scripts/benchmark-advisor.mjs",
+    "qa:browser": "node scripts/browser-qa.mjs",
+    "qa:playback": "node scripts/check-playback.mjs",
+    "qa:advisor": "node scripts/check-advisor.mjs",
+    "qa:sound": "node scripts/check-sound-scroll.mjs",
+    "qa:flows": "node scripts/check-flows.mjs",
+    "qa:spectators": "node scripts/check-spectators.mjs",
+    "qa:track": "node scripts/check-track-map.mjs",
+    "qa:cards": "node scripts/check-card-targets.mjs",
+    "qa:races": "node scripts/check-complete-races.mjs"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "5.3.0",
+    "@fontsource/playfair-display": "5.3.0",
+    "@react-three/fiber": "9.7.0",
+    "lucide-react": "1.32.0",
+    "qrcode": "1.5.4",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "three": "0.185.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@types/three": "0.185.4",
+    "@vitejs/plugin-react": "6.0.2",
+    "playwright-core": "^1.65.1",
+    "typescript": "5.9.3",
+    "vite": "8.0.13",
+    "vitest": "4.1.11"
+  }
+}
