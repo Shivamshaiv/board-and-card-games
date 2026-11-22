@@ -1,13 +1,11 @@
 # Board and Card Games
 
-| Game | Start here |
+Download the repository with **Code → Download ZIP** or clone it. Open the folder for the game you want to play.
+
+| Game | How to start |
 | --- | --- |
-| Camel Up | [3D camel racing with solo bots and LAN multiplayer](camel-up/README.md) |
-| Clue — The Gilded Alibi | [Single-player deduction at Vesper House](clue/README.md) |
-| Kachu (Judgment) | [Multiplayer trick-taking with AI opponents](kachu/README.md) |
+| [Camel Up](camel-up/README.md) | On Windows with Node.js 22.18 or later, open `camel-up/Play Camel Up.cmd`. Play solo with bots or host a table for friends on the same network. |
+| [Clue — The Gilded Alibi](clue/README.md) | In `clue/`, use Node.js 22.13 or later and run `npm install`, then `npm run dev`. Open [localhost:3000](http://localhost:3000). |
+| [Kachu — Judgment](kachu/README.md) | In `kachu/`, use Python 3.11 and run `python -m pip install -r requirements.txt`, then `python app.py`. Open [localhost:5000](http://localhost:5000). |
 
-Run each game from its own folder using its README. For Kachu, set the optional KACHU_SECRET_KEY environment variable to keep the Flask signing key stable across restarts. By default the server generates a fresh key at startup.
-
-## Automatic sync
-
-[Windows sync setup, status and conflict handling](tools/game-sync/README.md)
+The first installation downloads dependencies. Each game runs on your computer. Kachu generates a Flask signing key at startup unless you set `KACHU_SECRET_KEY`.

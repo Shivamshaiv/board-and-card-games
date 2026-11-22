@@ -1,5 +1,7 @@
 # Automatic game sync on Windows
 
+This tool was designed for a private working collection. It checks repository visibility and stops on a public destination. Players can run the games directly using the instructions in the [collection README](../../README.md).
+
 This worker publishes saved source changes to the private `Shivamshaiv/board-and-card-games` repository. It runs under the signed-in Windows user every five minutes and at sign-in. Codex and the games can be closed.
 
 | Source | Destination on the collection’s main branch |
